@@ -1,0 +1,8 @@
+react
+react-dom
+
++ webpack
++ babel-core
++ babel-loader
++ babel-preset-env
+babel-preset-react
