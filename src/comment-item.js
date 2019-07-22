@@ -1,13 +1,12 @@
 import React from 'react';
 
 const CommentItem = (props) => {
-	//const className = props.checked ? 'checked' : '';
-
+	const { author, date, remove} = props;
 	return (
 		<li 
 		>	
 			<div>
-				{props.author}
+				{author}
 			</div>	 
 			
 			<div>
@@ -15,11 +14,11 @@ const CommentItem = (props) => {
 			</div>	
 			
 			<div>
-				{props.date}
+				{date}
 			</div>	
 
 			<button 
-				onClick = {props.remove}				
+				onClick = {remove}				
 			>Удалить
 			</button>
 		</li>
