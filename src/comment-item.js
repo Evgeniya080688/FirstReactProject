@@ -15,7 +15,7 @@ const CommentItem = (props) => {
 			</div>	
 			
 			<div>
-				{props.data}
+				{props.date}
 			</div>	
 
 			<button 

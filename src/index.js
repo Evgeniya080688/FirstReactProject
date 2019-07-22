@@ -1,39 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CommentItem from './comment-item';
+import css from './style.css';
+
+const defaultComments = [
+  {author: "Вася", date: "08-07-2017", text: "Очень классно! Молодцы"},
+  {author: "Коля", date: "08-07-2017", text: "Просто Супер"},
+  {author: "Петя", date: "08-07-2017", text: "Да, согласен"}
+];
+
+const comments = JSON.parse(localStorage.getItem("comments"));
 
 //React-компонент (class-based)
 class CommentApp extends React.Component {
 	constructor() {
 		super();
-		if (localStorage.getItem('comments')) {
-			this.state = {
-				comments:  JSON.parse(localStorage.getItem('comments')), 
-				newAuthor: '',
-				newComment: ''
-
-			};
-		} 
-		else {react
-			this.state = {
-				comments: [
-					{ author: 'Вася', data: '08-07-2017', text: 'Очень классно! Молодцы' }, 
-					{ author: 'Коля', data: '08-07-2017', text: 'Просто Супер' }, 
-					{ author: 'Петя', data: '08-07-2017', text: 'Да, согласен' },
-				],
-
-				newAuthor: '',
-				newComment: ''
-
-			};
-		}
+		this.state = {
+	        comments: comments || defaultComments,
+	        newAuthor: "",
+	        newComment: ""
+    	};
 
 		//localStorage.setItem('comments', '');
 
 	}
 
 	remove(key) {
-		const comments = this.state.comments;
+		const {comments} = this.state;
 		comments.splice(key, 1);
 
 		//Обновляем состояние приложения
@@ -48,14 +41,14 @@ class CommentApp extends React.Component {
 		
 		const dayToday = nowDate.getDate();
 		const monthToday = nowDate.getMonth()+1;
-		const yearToday = nowDate.getYear()+1900;
+		const yearToday = nowDate.getFullYear();
 
 		const fullDate = "" + dayToday+"-"+ monthToday + "-" + yearToday;
 		//console.log('now');
 
 		comments.push({
 			author: this.state.newAuthor,
-			data: fullDate,
+			date: fullDate,
 			text: this.state.newComment
 		});
 
@@ -85,7 +78,7 @@ class CommentApp extends React.Component {
 									key = {i}
 									author = {comment.author}
 									text = {comment.text}
-									data = {comment.data}							
+									date = {comment.date}							
 									remove = {this.remove.bind(this, i)}
 							/>
 							)
