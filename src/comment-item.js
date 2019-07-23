@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CommentItem = (props) => {
-	const { author, date, remove} = props;
+	const { author, date, text, remove} = props;
 	return (
 		<li 
 		>	
@@ -10,7 +10,7 @@ const CommentItem = (props) => {
 			</div>	 
 			
 			<div>
-				{props.text}
+				{text}
 			</div>	
 			
 			<div>

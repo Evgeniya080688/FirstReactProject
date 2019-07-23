@@ -21,11 +21,13 @@ class CommentApp extends React.Component {
 	        newComment: ""
     	};  	
 
-    	this.state.comments.map((comment, i) => {
-    		this.remove = this.remove.bind(this, i);
-    	})	
+    	this.remove = this.remove.bind(this);
+    	this.changeElForm = this.changeElForm.bind(this);
+    	this.addNewComment = this.addNewComment.bind(this)
 
-		
+    	// this.state.comments.map((comment, i) => {
+    	// 	this.remove = this.remove.bind(this, i);
+    	// })			
 
 		//localStorage.setItem('comments', '');
 
@@ -42,7 +44,7 @@ class CommentApp extends React.Component {
 	}
 
 	addNewComment() {
-		const comments = this.state.comments;
+		const {comments} = this.state;
 		const nowDate = new Date();
 		
 		const dayToday = nowDate.getDate();
@@ -71,13 +73,16 @@ class CommentApp extends React.Component {
 		
 	}
 
-	onChangeName(ev) {
-		this.setState({ newAuthor: ev.target.value});
+	changeElForm(event) {
+		const target = event.target;
+	    const value = target.value;
+	    const name = target.name;
+
+	    this.setState({
+	      [name]: value
+	    });
 	}
 
-	onChangeComment(ev) {
-		this.setState({ newComment: ev.target.value});
-	}
 
 	render() {
 		// JSX-синтаксис
@@ -93,7 +98,8 @@ class CommentApp extends React.Component {
 						comments.map((comment, i) => {
 							const { author, text, date } = comment;
 							return (
-								<CommentItem
+								<CommentItem 
+									//commentsList={CommentsList}
 									key = {i}
 									author = {author}
 									text = {text}
@@ -106,14 +112,15 @@ class CommentApp extends React.Component {
 				</ul>
 
 
-				<form  name="addNewComment">
+				<form action={this.addNewComment} name="addNewComment">
 					<h2>Добавь свой комментарий</h2>
 					<input 
 						type="text"
+						name="newAuthor"
 						required
 						placeholder = "Введите имя"
 						value = {this.state.newAuthor}
-						onChange = {ev => this.onChangeName(ev)}
+						onChange = {this.changeElForm}
 						
 					/>
 
@@ -121,15 +128,16 @@ class CommentApp extends React.Component {
 						required
 						rows="10" 
 						cols="45" 
-						name="comment"
-						onChange = {ev => this.onChangeComment(ev)}
+						name="newComment"
+						onChange = {this.changeElForm}
 						
 					>
 						{this.state.newComment}			  
 					</textarea>					
 
-					<button						
-						onClick={() => this.addNewComment()}
+					<button		
+						type="submit"				
+						onClick={this.addNewComment}
 					>
 					Добавить
 					</button>
