@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CommentItem = (props) => {
-	const { key, author, date, text, remove} = props;
+	const { id, author, date, text, remove} = props;
 	return (
 		<li>	
 			<div>

@@ -36,9 +36,9 @@ class CommentApp extends React.Component {
 
 	}
 
-	remove(key) {
+	remove(id) {
 		const {comments} = this.state;
-		comments.splice(key, 1);
+		comments.splice(id, 1);
 
 		//Обновляем состояние приложения
 		localStorage.setItem('comments', JSON.stringify(this.state.comments));
@@ -100,7 +100,7 @@ class CommentApp extends React.Component {
 				<h1>Комментарии</h1>
 				<CommentsList comments = { comments } />
 
-				<form onsubmit={this.addNewComment0} name="addNewComment">
+				<form onSubmit={this.addNewComment} name="addNewComment">
 					<h2>Добавь свой комментарий</h2>
 					<input 
 						type="text"
@@ -125,7 +125,7 @@ class CommentApp extends React.Component {
 
 					<input		
 						type = "submit"				
-						value = "Добавить"
+						value = "Добавить"						
 					/>
 
 				</form>	

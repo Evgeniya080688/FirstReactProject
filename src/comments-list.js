@@ -9,7 +9,8 @@ const CommentsList = (props) => {
 				const { id, author, text, date, remove } = comment;
 				return (
 					<CommentItem 
-						key = { id }
+						key = { i }	
+						id = { id }					
 						author = { author }
 						text = { text }
 						date = { date }							
