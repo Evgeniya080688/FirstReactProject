@@ -1,10 +1,9 @@
 import React from 'react';
 
 const CommentItem = (props) => {
-	const { author, date, text, remove} = props;
+	const { key, author, date, text, remove} = props;
 	return (
-		<li 
-		>	
+		<li>	
 			<div>
 				{author}
 			</div>	 
@@ -19,10 +18,13 @@ const CommentItem = (props) => {
 
 			<button 
 				onClick = {remove}				
-			>Удалить
+			>
+			Удалить
 			</button>
 		</li>
 	);
 }
 
 export default CommentItem;
+
+			
