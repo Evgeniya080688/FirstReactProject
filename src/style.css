@@ -28,6 +28,6 @@ textarea {
 	margin-bottom: 15px;
 }
 
-button {
+input[type = submit] {
 	width: 200px;
 }

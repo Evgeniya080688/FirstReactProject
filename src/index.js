@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CommentItem from './comment-item';
+import CommentsList from './comments-list';
 import css from './style.css';
 
 const defaultComments = [
-  {author: "Вася", date: "08-07-2017", text: "Очень классно! Молодцы"},
-  {author: "Коля", date: "08-07-2017", text: "Просто Супер"},
-  {author: "Петя", date: "08-07-2017", text: "Да, согласен"}
+  {id: "000000001", author: "Вася", date: "08-07-2017", text: "Очень классно! Молодцы"},
+  {id: "000000002", author: "Коля", date: "08-07-2017", text: "Просто Супер"},
+  {id: "000000003", author: "Петя", date: "08-07-2017", text: "Да, согласен"}
 ];
 
 const comments = JSON.parse(localStorage.getItem("comments"));
@@ -25,19 +26,21 @@ class CommentApp extends React.Component {
 
     	this.remove = this.remove.bind(this);
     	this.changeElForm = this.changeElForm.bind(this);
-    	this.addNewComment = this.addNewComment.bind(this)
+    	this.addNewComment = this.addNewComment.bind(this);
 
     	// this.state.comments.map((comment, i) => {
     	// 	this.remove = this.remove.bind(this, i);
-    	// })			
+    	// })
+
+    	//localStorage.setItem('comments', JSON.stringify(this.state.comments));			
 
 		//localStorage.setItem('comments', '');
 
 	}
 
-	remove(key) {
+	remove(id) {
 		const {comments} = this.state;
-		comments.splice(key, 1);
+		comments.splice(id, 1);
 
 		//Обновляем состояние приложения
 		localStorage.setItem('comments', JSON.stringify(this.state.comments));
@@ -45,9 +48,10 @@ class CommentApp extends React.Component {
 
 	}
 
-	addNewComment() {
+	addNewComment(event) {
 		const {comments} = this.state;
 		const nowDate = new Date();
+		const newId = "" + Math.random().toString(36).substr(2, 9);
 		
 		const dayToday = nowDate.getDate();
 		const monthToday = nowDate.getMonth()+1;
@@ -59,6 +63,7 @@ class CommentApp extends React.Component {
 		if ((this.state.newAuthor.replace(/\s+/g," ").trim() != '') && (this.state.newComment.replace(/\s+/g," ").trim() != '')) {
 
 			comments.push({
+				id: newId,
 				author: this.state.newAuthor,
 				date: fullDate,
 				text: this.state.newComment
@@ -72,6 +77,8 @@ class CommentApp extends React.Component {
 				newComment: ''
 			});
 		}	
+
+		event.preventDefault();
 		
 	}
 
@@ -88,33 +95,14 @@ class CommentApp extends React.Component {
 
 	render() {
 		// JSX-синтаксис
-		const { comments } = this.state;
 
 		return (
 
 			<div>
 				<h1>Комментарии</h1>
+				<CommentsList comments = { comments } />
 
-				<ul>
-					{
-						comments.map((comment, i) => {
-							const { author, text, date } = comment;
-							return (
-								<CommentItem 
-									//commentsList={CommentsList}
-									key = {i}
-									author = {author}
-									text = {text}
-									date = {date}							
-									remove = { this.remove }
-							/>
-							)
-						})
-					}
-				</ul>
-
-
-				<form action={this.addNewComment} name="addNewComment">
+				<form onSubmit={this.addNewComment} name="addNewComment">
 					<h2>Добавь свой комментарий</h2>
 					<input 
 						type="text"
@@ -137,17 +125,16 @@ class CommentApp extends React.Component {
 						{this.state.newComment}			  
 					</textarea>					
 
-					<button		
-						type="submit"				
-						onClick={this.addNewComment}
-					>
-					Добавить
-					</button>
+					<input		
+						type = "submit"				
+						value = "Добавить"						
+					/>
 
 				</form>	
 
 			</div>		
 		);
+		
 	}
 }
 
