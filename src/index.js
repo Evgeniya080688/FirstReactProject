@@ -11,6 +11,8 @@ const defaultComments = [
 
 const comments = JSON.parse(localStorage.getItem("comments"));
 
+
+
 //React-компонент (class-based)
 class CommentApp extends React.Component {
 	constructor() {
