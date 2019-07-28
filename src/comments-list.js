@@ -8,13 +8,12 @@ const CommentsList = (props) => {
 			comments.map((comment, i) => {
 				const { id, author, text, date, remove } = comment;
 				return (
-					<CommentItem 
-						key = { i }	
+					<CommentItem 	
 						id = { id }					
 						author = { author }
 						text = { text }
 						date = { date }							
-						remove = { remove }
+						remove = { () => this.remove(id) }
 				/>
 				)
 			})

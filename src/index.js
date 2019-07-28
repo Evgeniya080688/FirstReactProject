@@ -39,7 +39,7 @@ class CommentApp extends React.Component {
 	}
 
 	remove(id) {
-		const {comments} = this.state;
+		const { comments } = this.state;
 		comments.splice(id, 1);
 
 		//Обновляем состояние приложения

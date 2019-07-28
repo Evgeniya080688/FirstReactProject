@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CommentItem = (props) => {
-	const { id, author, date, text, remove} = props;
+	const { id, author, date, text, remove } = props;
 	return (
 		<li>	
 			<div>
@@ -17,7 +17,7 @@ const CommentItem = (props) => {
 			</div>	
 
 			<button 
-				onClick = {remove}				
+				onClick = { remove }				
 			>
 			Удалить
 			</button>
