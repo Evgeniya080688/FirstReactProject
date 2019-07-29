@@ -40,7 +40,12 @@ class CommentApp extends React.Component {
 
 	remove(id) {
 		const { comments } = this.state;
-		comments.splice(id, 1);
+		//comments.splice(id, 1);
+		for ( var i = 0; i < comments.length; i++ ) {
+			if (id === comments[i].id) {
+				comments.splice(i, 1);
+			}
+		}
 
 		//Обновляем состояние приложения
 		localStorage.setItem('comments', JSON.stringify(this.state.comments));
@@ -59,6 +64,8 @@ class CommentApp extends React.Component {
 
 		const fullDate = "" + dayToday+"-"+ monthToday + "-" + yearToday;
 		//console.log('now');
+
+		event.preventDefault();
 
 		if ((this.state.newAuthor.replace(/\s+/g," ").trim() != '') && (this.state.newComment.replace(/\s+/g," ").trim() != '')) {
 
@@ -84,8 +91,7 @@ class CommentApp extends React.Component {
 
 	changeElForm(event) {
 		const target = event.target;
-	    const value = target.value;
-	    const name = target.name;
+	    const { value, name } = target;
 
 	    this.setState({
 	      [name]: value
@@ -100,7 +106,7 @@ class CommentApp extends React.Component {
 
 			<div>
 				<h1>Комментарии</h1>
-				<CommentsList comments = { comments } />
+				<CommentsList comments = { comments } remove = { this.remove }/>
 
 				<form onSubmit={this.addNewComment} name="addNewComment">
 					<h2>Добавь свой комментарий</h2>
