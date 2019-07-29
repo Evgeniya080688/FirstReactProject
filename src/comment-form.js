@@ -1,30 +1,41 @@
 import React from 'react';
 
-const CommentItem = (props) => {
-	const { id, author, text, date, remove } = props;
+const CommentForm = (props) => {
+	const { newAuthor, newComment, addNewComment, changeElForm } = props;
 	return (
-		<li>	
-			<div>
-				{author}
-			</div>	 
-			
-			<div>
-				{text}
-			</div>	
-			
-			<div>
-				{date}
-			</div>	
+		<form onSubmit={addNewComment} name="addNewComment">
+			<h2>Добавь свой комментарий</h2>
+			<input 
+				type="text"
+				name="newAuthor"
+				required
+				placeholder = "Введите имя"
+				value = {newAuthor}
+				onChange = { changeElForm }
+				
+			/>
 
-			<button 
-				onClick = { () => remove(id) }				
+			<textarea 
+				required
+				rows = "10" 
+				cols = "45" 
+				name = "newComment"
+				value = {newComment}
+				onChange = { changeElForm }
+				
 			>
-			Удалить
-			</button>
-		</li>
+				{newComment}			  
+			</textarea>					
+
+			<input		
+				type = "submit"				
+				value = "Добавить"						
+			/>
+
+		</form>	
 	);
 }
 
-export default CommentItem;
+export default CommentForm;
 
 			

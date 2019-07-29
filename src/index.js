@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CommentItem from './comment-item';
 import CommentsList from './comments-list';
+import CommentForm from './comment-form';
 import css from './style.css';
 
 const defaultComments = [
@@ -108,35 +109,12 @@ class CommentApp extends React.Component {
 				<h1>Комментарии</h1>
 				<CommentsList comments = { comments } remove = { this.remove }/>
 
-				<form onSubmit={this.addNewComment} name="addNewComment">
-					<h2>Добавь свой комментарий</h2>
-					<input 
-						type="text"
-						name="newAuthor"
-						required
-						placeholder = "Введите имя"
-						value = {this.state.newAuthor}
-						onChange = {this.changeElForm}
-						
-					/>
-
-					<textarea 
-						required
-						rows="10" 
-						cols="45" 
-						name="newComment"
-						onChange = {this.changeElForm}
-						
-					>
-						{this.state.newComment}			  
-					</textarea>					
-
-					<input		
-						type = "submit"				
-						value = "Добавить"						
-					/>
-
-				</form>	
+				<CommentForm 
+					newAuthor = {this.state.newAuthor} 
+					newComment = {this.state.newComment} 
+					addNewComment = { this.addNewComment } 
+					changeElForm = { this.changeElForm }
+				 />			
 
 			</div>		
 		);
