@@ -4,6 +4,7 @@ import CommentItem from './comment-item';
 import CommentsList from './comments-list';
 import CommentForm from './comment-form';
 import css from './style.css';
+import {createId, getDate, isEmptyString} from './utils.js';
 
 const defaultComments = [
   {id: "000000001", author: "Вася", date: "08-07-2017", text: "Очень классно! Молодцы"},
@@ -12,8 +13,6 @@ const defaultComments = [
 ];
 
 const comments = JSON.parse(localStorage.getItem("comments"));
-
-
 
 //React-компонент (class-based)
 class CommentApp extends React.Component {
@@ -29,52 +28,41 @@ class CommentApp extends React.Component {
     	this.changeElForm = this.changeElForm.bind(this);
     	this.addNewComment = this.addNewComment.bind(this);
 
-    	// this.state.comments.map((comment, i) => {
-    	// 	this.remove = this.remove.bind(this, i);
-    	// })
-
-    	//localStorage.setItem('comments', JSON.stringify(this.state.comments));			
-
-		//localStorage.setItem('comments', '');
-
 	}
 
 	remove(id) {
 		const { comments } = this.state;
-		//comments.splice(id, 1);
-		for ( var i = 0; i < comments.length; i++ ) {
-			if (id === comments[i].id) {
+
+		comments.forEach(function(item, i, comments) {
+			if (id === item.id) {
 				comments.splice(i, 1);
 			}
-		}
+		});
 
 		//Обновляем состояние приложения
+		this.setState((state) => ({
+			comments: state.comments
+		}));
+		
 		localStorage.setItem('comments', JSON.stringify(this.state.comments));
-		this.setState( { comments } );
+		
 
 	}
 
 	addNewComment(event) {
-		const {comments} = this.state;
-		const nowDate = new Date();
-		const newId = "" + Math.random().toString(36).substr(2, 9);
-		
-		const dayToday = nowDate.getDate();
-		const monthToday = nowDate.getMonth()+1;
-		const yearToday = nowDate.getFullYear();
-
-		const fullDate = "" + dayToday+"-"+ monthToday + "-" + yearToday;
-		//console.log('now');
-
 		event.preventDefault();
 
-		if ((this.state.newAuthor.replace(/\s+/g," ").trim() != '') && (this.state.newComment.replace(/\s+/g," ").trim() != '')) {
+		const {comments, newAuthor, newComment} = this.state;
+		const newId = createId();
+		const fullDate = getDate();	
+
+		if (!isEmptyString(newAuthor) && !isEmptyString(newComment)) {
 
 			comments.push({
 				id: newId,
-				author: this.state.newAuthor,
+				author: newAuthor,
 				date: fullDate,
-				text: this.state.newComment
+				text: newComment
 			});
 
 			localStorage.setItem('comments', JSON.stringify(this.state.comments));
@@ -85,8 +73,6 @@ class CommentApp extends React.Component {
 				newComment: ''
 			});
 		}	
-
-		event.preventDefault();
 		
 	}
 
@@ -102,7 +88,8 @@ class CommentApp extends React.Component {
 
 	render() {
 		// JSX-синтаксис
-
+		const {newAuthor, newComment, comments} = this.state;
+		
 		return (
 
 			<div>
@@ -110,8 +97,8 @@ class CommentApp extends React.Component {
 				<CommentsList comments = { comments } remove = { this.remove }/>
 
 				<CommentForm 
-					newAuthor = {this.state.newAuthor} 
-					newComment = {this.state.newComment} 
+					newAuthor = {newAuthor} 
+					newComment = {newComment} 
 					addNewComment = { this.addNewComment } 
 					changeElForm = { this.changeElForm }
 				 />			

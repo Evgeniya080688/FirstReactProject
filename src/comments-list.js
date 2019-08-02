@@ -5,7 +5,7 @@ const CommentsList = (props) => {
 	const { comments, remove } = props;
 	return (<ul>
 		{
-			comments.map((comment, i) => {
+			comments.map((comment) => {
 				const { id, author, text, date } = comment;
 				return (
 					<CommentItem 	

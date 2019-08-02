@@ -9,10 +9,6 @@ ul li {
 	margin-bottom: 15px;
 }
 
-.checked {
-	text-decoration: line-through;
-}
-
 form {
 	display: flex;
 	margin-left: 25px;
@@ -30,4 +26,12 @@ textarea {
 
 input[type = submit] {
 	width: 200px;
+}
+
+.deleteBtn {
+	margin-top: 25px;
+	background-color: blue;
+	line-height: 20px;
+	border: 0;
+	color: white;
 }
